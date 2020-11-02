@@ -48,7 +48,7 @@ Source plugins create nodes which can then be transformed into a usable format b
 
 #### gatsby-source-filesystem
 
-The [gatsby-source-filesystem](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/?=source-file) plugin allows you to access content from Markdown files in your filesystem. For a blog post, you might want to update the config to create pages from markdown files. An `options` object can be passed to a plugin, and you're passing the filesystem `path` (which is where your Markdown files will be located) and then a `name` for the source files.
+The [gatsby-source-filesystem](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/?=source-file) plugin allows you to access content from Markdown files in your filesystem. For a blog post, you might want to update the config to create pages from markdown files. An `options` object can be passed to a plugin, and you're passing the filesystem `path` (which is where your Markdown files will be located) and then a `name` for the source files. You can add multiple instances.
 
 ```js
 module.exports = {
@@ -61,7 +61,14 @@ module.exports = {
         path: `${__dirname}/src/pages`,
         name: "pages"
       }
-    }
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/content/posts`,
+      },
+    },
   ]
 }
 ```
@@ -85,7 +92,7 @@ You can add all sorts of extra functionality to this with extra plugins e.g. add
 }
 ```
 
-## Site Metadata
+## Site metadata
 
 You can add site metadata in your `gatsby-config.js` file like so:
 
@@ -110,7 +117,26 @@ You can add site metadata in your `gatsby-config.js` file like so:
   }
 ```
 
+## Adding content as a Markdown file
 
+We've defined the path to the post content files in our source plugin config above as `/content/posts`. This is where your post content files will need to live. For this example I'll be creating a file called `hello-world.md` as below:
+
+```md
+---
+path: "/posts/hello-world"
+date: "2020-11-02"
+title: "A Hello World Post"
+author: "Charlotte"
+tags:
+    - "fun"
+    - "hello"
+---
+Hello there, world! Here's my first blog post!
+```
+
+The block between the `---` is **front matter** data that you can inject into your React components later on. All your important metadata for each post goes here. It's written in `yaml` format.
+
+One important note is that `path` will be used when you dynamically create your pages to specify the URL/path to render the file. In this instance, `http://localhost:8000/posts/hello-world` will be the path to this file.
 
 
 
