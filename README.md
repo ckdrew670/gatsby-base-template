@@ -4,9 +4,10 @@
 
 This Gatsby base theme includes the following plugins. Run `npm install` to install:
 
-*
-* Sass
-* Responsive Images
+* [gatsby-source-filesystem](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/?=source-file)
+* [gatsby-transformer-remark](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/)
+* [gatsby-plugin-react-helmet](https://www.gatsbyjs.com/plugins/gatsby-plugin-react-helmet/)
+* [gatsby-plugin-catch-links](https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/)
 
 ## Gatsby CLI
 
@@ -22,7 +23,93 @@ Create a new project folder and run it using:
 gatsby new {project-name} && cd {project-name} && gatsby develop
 ```
 
-This will start a hot-reloading development server accessible at: `http://localhost:8000`
+This will set up a new project using Gatsby's default starter theme, which includes several necessary plugins, and start a hot-reloading development server accessible at: `http://localhost:8000`
+
+## Install Plugins
+
+The Gatsby default theme comes with some popular plugins added (see the `gatsby-config.js` file for the full list). You'll need to run `npm install` to install them. 
+
+You can easily add extra plugins from Gatsby's vast library using `npm install {plugin-name}`. Then go and update your `gatsby-config.js` plugins list to include the new plugin:
+
+```js
+module.exports = {
+  plugins: [
+    "gatsby-plugin-catch-links",
+    "gatsby-plugin-react-helmet"
+  ]
+}
+```
+
+[Explore the Gatsby Plugin Library here](https://www.gatsbyjs.com/plugins/).
+
+### Source Plugins
+
+Source plugins create nodes which can then be transformed into a usable format by a transformer plugin. For instance, a typical workflow often involves using `gatsby-source-filesystem`, which loads files off of disk (e.g. markdown files) and then specifying a Markdown transformer, eg. `gatsby-transformer-remark` to transform the Markdown into HTML.
+
+#### gatsby-source-filesystem
+
+The [gatsby-source-filesystem](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/?=source-file) plugin allows you to access content from Markdown files in your filesystem. For a blog post, you might want to update the config to create pages from markdown files. An `options` object can be passed to a plugin, and you're passing the filesystem `path` (which is where your Markdown files will be located) and then a `name` for the source files.
+
+```js
+module.exports = {
+  plugins: [
+    "gatsby-plugin-catch-links",
+    "gatsby-plugin-react-helmet",
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/pages`,
+        name: "pages"
+      }
+    }
+  ]
+}
+```
+
+### Transformer Plugins
+
+Transformer plugins takes data from a source such as a markdown, json or yaml file and transforms it into a format that Gatsby can understand so that you can use GraphQL to query it. The source plugins and transformer plugins work together to pull data from eg. markdown files off your system and the markdown transformer will convert that to usable HTML.
+
+#### gatsby-transformer-remark
+
+The [gatsby-transformer-remark](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/) plugin is used for converting Markdown files.
+
+You can add all sorts of extra functionality to this with extra plugins e.g. add syntax highlighting with `gatsby-remark-prismjs`, `gatsby-remark-copy-linked-files` to copy relative files specified in markdown, `gatsby-remark-images` to compress images and add responsive images with `srcset`, etc.
+
+```js
+{
+    resolve: "gatsby-transformer-remark",
+        options: {
+        plugins: [] // add any additional transformer-remark plugins here
+    }
+}
+```
+
+## Site Metadata
+
+You can add site metadata in your `gatsby-config.js` file like so:
+
+```js
+  module.exports = {
+    siteMetadata: {
+      title: `Your Blog Title`,
+      description: `Add a description for your site here.`,
+      author: `Your Name`,
+    },
+    plugins: [
+      "gatsby-plugin-catch-links",
+      "gatsby-plugin-react-helmet",
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: `${__dirname}/src/pages`,
+          name: "pages"
+        }
+      }
+    ]
+  }
+```
+
 
 
 
