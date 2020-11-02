@@ -1,3 +1,36 @@
+# Gatsby Template
+
+## Introduction
+
+This Gatsby base theme includes the following plugins. Run `npm install` to install:
+
+*
+* Sass
+* Responsive Images
+
+## Gatsby CLI
+
+Install the Gatsby CLI `npm install -g gatsby-cli`. You'll need Node v10+ (`nvm use v10`). You can set up an `.nvmrc` file in your project to manage your version of Node.
+
+There is a comprehensive cheatsheet for Gatsby CLI commands [here](https://www.gatsbyjs.com/docs/cheat-sheet/) or run `gatsby --help`.
+
+## Quick Start
+
+Create a new project folder and run it using:
+
+```bash
+gatsby new {project-name} && cd {project-name} && gatsby develop
+```
+
+This will start a hot-reloading development server accessible at: `http://localhost:8000`
+
+
+
+
+
+
+
+
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
   <a href="https://www.gatsbyjs.com">
