@@ -138,10 +138,52 @@ The block between the `---` is **front matter** data that you can inject into yo
 
 One important note is that `path` will be used when you dynamically create your pages to specify the URL/path to render the file. In this instance, `http://localhost:8000/posts/hello-world` will be the path to this file.
 
+## Create a React template for your post page
 
+Create a `templates` folder for your templates to live inside the `/src` folder. Inside here, create a `Post.js` file and add your template:
 
+```js
+import React from "react"
+import { Helmet } from "react-helmet"
 
+export default function Post({
+  data // this prop will be injected by the GraphQL query
+}) {
+  const { markdownRemark: post } = data // data.markdownRemark holds your post data
+  return (
+    <div className="blog-post-container">
+      <Helmet title={`Your Blog Name - ${ post.frontmatter.title }`} />
+      <div className="blog-post">
+        <h1>{ post.frontmatter.title }</h1>
+        <div
+          className="blog-post-content"
+          dangerouslySetInnerHTML={{ __html: post.html }}
+        />
+      </div>
+    </div>
+  )
+}
+```
 
+## Writing a GraphQL query
+
+Now you need to connect your template and your content using GraphQL. You do this by adding a GraphQL query at the bottom of your template. This will inject the data via the `data` property passed in at the top.
+
+```sql
+export const pageQuery = graphql`
+  query BlogPostByPath($path: String!) {
+    markdownRemark(frontmatter: { path: { eq: $path } }) {
+      html
+      frontmatter {
+        date(formatString: "MMMM DD, YYYY")
+        path
+        title
+      }
+    }
+  }
+`
+```
+There's good documentation on GraphQL in the [Gatsby docs](https://www.gatsbyjs.com/docs/graphql/) and it's worth having a look at the [GraphiQL](https://www.gatsbyjs.com/docs/running-queries-with-graphiql/) tool that 
 
 
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
