@@ -364,6 +364,56 @@ exports.createPages = async ({ actions, graphql }) => {
 
 The actual posts are available via the path `result.data.allMarkdownRemark.edges`. Each edge contains an internal node, and this node holds the useful data that you will use to construct a page with Gatsby. Your GraphQL "shape" is directly reflected in this data object, so each property you pulled from that query will be available when you are querying in your GraphQL blog post template.
 
+## Creating an Archive List
+
+Gatsby has a standard for "listing pages," and they're placed in the root of our filesystem we specified in `gatsby-source-filesystem` (eg. `/src/pages`). So, create an `Archive.js` file therein. Additionally, note that all static JS files (that export a React component!) will get a corresponding static HTML file. For instance, if we create `src/pages/tags.js`, the path `http://localhost:8000/tags/` will be available within the browser and the statically generated site.
+
+In `Archive.js`:
+
+```js
+import React from "react"
+import { Link, graphql } from "gatsby"
+import { Helmet } from "react-helmet"
+// import '../css/index.css'; // add some style if you want!
+export default function Index({ data }) {
+  const { edges: posts } = data.allMarkdownRemark
+  return (
+    <div className="blog-posts">
+      {posts
+        .filter(post => post.node.frontmatter.title.length > 0)
+        .map(({ node: post }) => {
+          return (
+            <div className="blog-post-preview" key={post.id}>
+              <h1>
+                <Link to={post.frontmatter.path}>{post.frontmatter.title}</Link>
+              </h1>
+              <h2>{post.frontmatter.date}</h2>
+              <p>{post.excerpt}</p>
+            </div>
+          )
+        })}
+    </div>
+  )
+}
+export const pageQuery = graphql`
+  query IndexQuery {
+    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+      edges {
+        node {
+          excerpt(pruneLength: 250)
+          id
+          frontmatter {
+            title
+            date(formatString: "MMMM DD, YYYY")
+            path
+          }
+        }
+      }
+    }
+  }
+`
+```
+
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
   <a href="https://www.gatsbyjs.com">

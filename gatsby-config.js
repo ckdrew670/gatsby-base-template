@@ -6,18 +6,19 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
-    {
-        resolve: `gatsby-source-filesystem`,
-        options: {
-            name: `pages`,
-            path: `${__dirname}/src/pages`,
-        },
-    },
+    `gatsby-plugin-remark-collection`,
     {
         resolve: `gatsby-source-filesystem`,
         options: {
           name: `posts`,
           path: `${__dirname}/content/posts`,
+        },
+    },
+    {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          name: `pages`,
+          path: `${__dirname}/src/pages`,
         },
     },
     `gatsby-transformer-sharp`,
