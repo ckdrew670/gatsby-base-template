@@ -116,37 +116,26 @@ Example `gatsby-config.js`:
 },
 ```
 
-Now you can query for these specifically like so:
+Now you can query for these specifically like so (or use GraphiQL to help you build the query):
 
 ```graphql
-posts: allMarkdownRemark(
-  filter: { fields: { collection: { eq: "posts" } } }
-  sort: { fields: [frontmatter___date], order: DESC }
-) {
-  edges {
-    node {
-      id
-      frontmatter {
-        title
-        path
-        tags
+export const pageQuery = graphql`
+  query ArchiveQuery {
+    allMarkdownRemark(filter: { fields: { collection: { eq: "posts" }}}) {
+      edges {
+        node {
+          id
+          excerpt(pruneLength: 250)
+          frontmatter {
+            title
+            date(formatString: "MMMM DD, YYYY")
+            path
+          }
+        }
       }
     }
   }
-}
-pages: allMarkdownRemark(
-  filter: { fields: { collection: { eq: "pages" } } }
-) {
-  edges {
-    node {
-      id
-      frontmatter {
-        title
-        path
-      }
-    }
-  }
-}
+`
 
 ```
 
@@ -366,42 +355,51 @@ The actual posts are available via the path `result.data.allMarkdownRemark.edges
 
 ## Creating an Archive List
 
-Gatsby has a standard for "listing pages," and they're placed in the root of our filesystem we specified in `gatsby-source-filesystem` (eg. `/src/pages`). So, create an `Archive.js` file therein. Additionally, note that all static JS files (that export a React component!) will get a corresponding static HTML file. For instance, if we create `src/pages/tags.js`, the path `http://localhost:8000/tags/` will be available within the browser and the statically generated site.
+Create an `archive.js` file in `src/pages`. Note that all static JS files (that export a React component) will get a corresponding static HTML file. For instance, if we create `src/pages/archive.js`, the path `http://localhost:8000/archive/` will be available within the browser and the statically generated site.
 
-In `Archive.js`:
+In `archive.js`:
 
 ```js
 import React from "react"
 import { Link, graphql } from "gatsby"
 import { Helmet } from "react-helmet"
+import Layout from "../components/layout"
+import SEO from "../components/seo"
+
 // import '../css/index.css'; // add some style if you want!
-export default function Index({ data }) {
+
+export default function Archive({ data }) {
   const { edges: posts } = data.allMarkdownRemark
   return (
-    <div className="blog-posts">
-      {posts
-        .filter(post => post.node.frontmatter.title.length > 0)
-        .map(({ node: post }) => {
-          return (
-            <div className="blog-post-preview" key={post.id}>
-              <h1>
-                <Link to={post.frontmatter.path}>{post.frontmatter.title}</Link>
-              </h1>
-              <h2>{post.frontmatter.date}</h2>
-              <p>{post.excerpt}</p>
-            </div>
-          )
-        })}
-    </div>
+    <Layout>
+        <SEO title="Archive" />
+        <div className="blog-posts">
+        {posts
+            .filter(post => post.node.frontmatter.title.length > 0)
+            .map(({ node: post }) => {
+            return (
+                <div className="blog-post-preview" key={post.id}>
+                <h1>
+                    <Link to={post.frontmatter.path}>{post.frontmatter.title}</Link>
+                </h1>
+                <h2>{post.frontmatter.date}</h2>
+                <p>{post.excerpt}</p>
+                </div>
+            )
+            })}
+        </div>
+    </Layout>
   )
 }
+
+// the query below is just getting data from the posts thanks to the gatsby-plugin-remark-collection plugin
 export const pageQuery = graphql`
-  query IndexQuery {
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+  query ArchiveQuery {
+    allMarkdownRemark(filter: { fields: { collection: { eq: "posts" }}}) {
       edges {
         node {
-          excerpt(pruneLength: 250)
           id
+          excerpt(pruneLength: 250)
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
@@ -413,6 +411,75 @@ export const pageQuery = graphql`
   }
 `
 ```
+
+## Internal Links - Gatsby Link API
+
+### Link component
+
+When linking to internal pages you should always use the built-in `<Link/>` component from Gatsby. Gatsby does not work if pages are not routed via this utility. Find out more [here](https://www.gatsbyjs.com/docs/gatsby-link/).
+
+To use, import the Link component into your React component:
+
+```js
+import { Link } from 'gatsby';
+```
+
+Then replace any anchor tags that point to internal files with the `<Link/>` component. Instead of the `href` attribute, use the `to` prop:
+
+```js
+<Link to="/" state={{ choice: 'pancakes' }}>
+```
+
+Under the hood this is using React Router and means that your pages won't need to fully refresh every time an internal link is clicked. Hints on how to style these links can be found [here](https://www.gatsbyjs.com/docs/gatsby-link/).
+
+Notice that you can add a `state` prop to the Link component and pass state through from the source page to the linked page. To access this in the linked page, use the `location` object to pull in the state as a prop.
+
+```js
+
+export default ({ location }) => {
+    <p>Here is my state from the source page: { location.state.choice }</p>
+}
+```
+
+### Navigate helper function
+
+The built-in `navigate` helper function helps you to navigate to pages programmatically, such as during form submissions. In these cases, `<Link/>` won't work. Docs on this can be found [here](https://www.gatsbyjs.com/docs/gatsby-link/#how-to-use-the-navigate-helper-function).
+
+To use, first import `navigate` into your component:
+
+```js
+import { navigate } from 'gatsby';
+```
+
+Then in your (e.g.) `handleSubmit`:
+
+```js
+const handleSubmit =  e => {
+    e.preventDefault();
+    navigate('/success-page/', { state: { formValues }})
+}
+```
+
+Note that the function can take more than one argument, the second being any state you want to pass to the success page (e.g. the form values). This works just like the Link component above. 
+
+## Path Prefix
+
+What if I want to host my blog site in a subdirectory e.g. `/blog/hello-world`? All pages need a prefix `blog/` added to all paths on the site.
+
+Also, links to various resources (JavaScript, CSS, images, and other static content) need the same prefix, so that the site continues to function correctly when served with the path prefix in place.
+
+Here's how to add a path prefix. In `gatsby-config.js`:
+
+```js
+module.exports = {
+  pathPrefix: `/blog`,
+}
+```
+
+More on this [in the docs](https://www.gatsbyjs.com/docs/path-prefix/).
+
+
+
 
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">

@@ -32,6 +32,8 @@ export default function Archive({ data }) {
   )
 }
 
+// the query below is just getting data from the posts thanks to the gatsby-plugin-remark-collection plugin
+
 export const pageQuery = graphql`
   query ArchiveQuery {
     allMarkdownRemark(filter: { fields: { collection: { eq: "posts" }}}) {
