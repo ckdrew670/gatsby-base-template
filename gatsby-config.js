@@ -3,6 +3,16 @@ module.exports = {
     title: `Your Blog Title`,
     description: `Add a description for your site here.`,
     author: `Your Name`,
+    menuLinks:[
+        {
+            name:'Home',
+            link:'/'
+        },
+        {
+            name:'Posts',
+            link:'/archive'
+        }
+    ]
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

@@ -412,6 +412,86 @@ export const pageQuery = graphql`
 `
 ```
 
+## Dynamic Site Navigation
+
+### Create the link data
+
+You can use Gatsby to dynamically generate your navigation. Where you store the data for your navigation can be anywhere - a backend API, CMS, headless CMS or even the filesystem. In this example, we'll use `gatsby-config.js` to store the link data in the `siteMetadata` object.
+
+```js
+module.exports = {
+  siteMetadata: {
+     title: 'You blog',
+    menuLinks:[
+        {
+            name:'home',
+            link:'/'
+        },
+        {
+            name:'page2',
+            link:'/page-2'
+        }
+    ]
+  },
+  plugins: []
+}
+```
+### Accessing data in the component
+
+Add the menuLinks to your `useStaticQuery` query in your component (eg. `layout.js`).
+
+```js
+const Layout = ({ children }) => {
+  const data = useStaticQuery(graphql`
+    query SiteTitleQuery {
+      site {
+        siteMetadata {
+          title
+          menuLinks {
+            name
+            link
+          }
+        }
+      }
+    }
+  `)
+```
+
+You can now pass this into a chlid component using props:
+
+```js
+<Header menuLinks={data.site.siteMetadata.menuLinks} siteTitle={data.site.siteMetadata.title} />
+```
+
+Now the `Header` component has access to `menuLinks` as a prop:
+
+```js
+const Header = ({ siteTitle, menuLinks }) => (
+
+    // ...
+    <div>
+          <nav>
+            <ul style={{ display: "flex", flex: 1 }}>
+              { menuLinks.map(link => (
+                <li
+                  key={ link.name }
+                  style={{
+                    listStyleType: `none`,
+                    padding: `1rem`,
+                  }}
+                >
+                  <Link style={{ color: `white` }} to={ link.link }>
+                    { link.name }
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+}
+```
+
 ## Internal Links - Gatsby Link API
 
 ### Link component
