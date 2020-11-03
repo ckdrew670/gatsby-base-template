@@ -4,7 +4,8 @@ import { Helmet } from "react-helmet"
 export default function Post({
   data // this prop will be injected by the GraphQL query
 }) {
-  const { markdownRemark: post } = data // data.markdownRemark holds your post data
+    
+  const post = data.markdownRemark // data.markdownRemark holds your post data
   return (
     <div className="blog-post-container">
       <Helmet title={`Your Blog Name - ${ post.frontmatter.title }`} />
@@ -18,3 +19,16 @@ export default function Post({
     </div>
   )
 }
+
+export const pageQuery = graphql`
+  query BlogPostByPath($path: String!) {
+    markdownRemark(frontmatter: { path: { eq: $path } }) {
+      html
+      frontmatter {
+        date(formatString: "MMMM DD, YYYY")
+        path
+        title
+      }
+    }
+  }
+`

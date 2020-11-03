@@ -8,6 +8,7 @@ This Gatsby base theme includes the following plugins. Run `npm install` to inst
 * [gatsby-transformer-remark](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/)
 * [gatsby-plugin-react-helmet](https://www.gatsbyjs.com/plugins/gatsby-plugin-react-helmet/)
 * [gatsby-plugin-catch-links](https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/)
+* [gatsby-plugin-remark-collection](https://www.gatsbyjs.com/plugins/gatsby-plugin-remark-collection/?=gatsby-pluginremark)
 
 ## Gatsby CLI
 
@@ -23,11 +24,11 @@ Create a new project folder and run it using:
 gatsby new {project-name} && cd {project-name} && gatsby develop
 ```
 
-This will set up a new project using Gatsby's default starter theme, which includes several necessary plugins, and start a hot-reloading development server accessible at: `http://localhost:8000`
+`gatsby new {project-name}` will set up a new project folder using Gatsby's default starter theme, which includes several necessary plugins, and `gatsby develop` will start a hot-reloading development server accessible at: `http://localhost:8000`
 
-## Install Plugins
+## Plugins
 
-The Gatsby default theme comes with some popular plugins added (see the `gatsby-config.js` file for the full list). You'll need to run `npm install` to install them. 
+The Gatsby default theme comes with some popular plugins added (see the `gatsby-config.js` file for the full list). You'll need to run `npm install` to install them.
 
 You can easily add extra plugins from Gatsby's vast library using `npm install {plugin-name}`. Then go and update your `gatsby-config.js` plugins list to include the new plugin:
 
@@ -249,6 +250,10 @@ export const pageQuery = graphql`
 `
 ```
 
+<!-- CONS -->
+
+<!-- have to do some dangerouslySetInnerHTML stuff ... -->
+
 There's good documentation on GraphQL in the [Gatsby docs](https://www.gatsbyjs.com/docs/graphql/) and the [GraphiQL](https://www.gatsbyjs.com/docs/running-queries-with-graphiql/) tool, which helps you to create GraphQL queries more easily. You'll find it when your development server is running at `http://localhost:8000/___graphql`.
 
 The `BlogPostByPath` query will be injected with the current `path` for the specific blog post. This path is then available as `$path` in your query. For instance, if you were viewing your previously created blog post, the path of the file that data will be pulled from will be
@@ -311,6 +316,53 @@ exports.createPages = async ({ actions, graphql }) => {
 ```
 
 The `exports.createPages` API expects a Promise to be returned, so it works seamlessly with the graphql function, which returns a Promise.
+
+Above, you're using GraphQL to get all Markdown nodes and making them available under the `allMarkdownRemark` GraphQL property. You're effectively seeding a GraphQL "database" that you can then query against via page-level GraphQL queries.
+
+You now have your query written, but haven't used the `createPages` action creator to create a page. Here's how to do that:
+
+```js
+const path = require("path") // grabbing the path property from your content
+
+// set up a createPages action creator
+exports.createPages = async ({ actions, graphql }) => {
+  const { createPage } = actions
+  const blogPostTemplate = path.resolve(`src/templates/Post.js`)
+
+  // add a GraphQL query to fetch the path data from your posts
+  const result = await graphql(`
+    {
+      allMarkdownRemark(
+        sort: { order: DESC, fields: [frontmatter___date] }
+        limit: 1000
+      ) {
+        edges {
+          node {
+            frontmatter {
+              path
+            }
+          }
+        }
+      }
+    }
+  `)
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+
+  // create a page for each markdown file
+  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    createPage({
+      path: node.frontmatter.path,
+      component: blogPostTemplate,
+      context: {} // additional data can be passed via context
+    })
+  })
+}
+```
+
+The actual posts are available via the path `result.data.allMarkdownRemark.edges`. Each edge contains an internal node, and this node holds the useful data that you will use to construct a page with Gatsby. Your GraphQL "shape" is directly reflected in this data object, so each property you pulled from that query will be available when you are querying in your GraphQL blog post template.
 
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
