@@ -11,6 +11,10 @@ module.exports = {
         {
             name:'Posts',
             link:'/archive'
+        },
+        {
+            name:'About',
+            link:'/about'
         }
     ]
   },
@@ -28,7 +32,14 @@ module.exports = {
         resolve: `gatsby-source-filesystem`,
         options: {
           name: `pages`,
-          path: `${__dirname}/src/pages`,
+          path: `${__dirname}/content/single-pages`,
+        },
+    },
+    {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          name: `content`,
+          path: `${__dirname}/content/index.md`,
         },
     },
     `gatsby-transformer-sharp`,

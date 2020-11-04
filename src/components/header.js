@@ -1,6 +1,7 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
-import React from "react"
+import React from "react";
+import MainNav from "../components/main-nav";
 
 const Header = ({ siteTitle, menuLinks }) => (
   <header
@@ -30,33 +31,20 @@ const Header = ({ siteTitle, menuLinks }) => (
         </Link>
       </h1>
 
-      <nav>
-            <ul style={{ display: "flex", flex: 1 }}>
-              { menuLinks.map(link => (
-                <li
-                  key={ link.name }
-                  style={{
-                    listStyleType: `none`,
-                    padding: `1rem`,
-                  }}
-                >
-                  <Link style={{ color: `white` }} to={ link.link }>
-                    { link.name }
-                  </Link>
-                </li>
-              ))}
-            </ul>
-      </nav>
+      <MainNav menuLinks={ menuLinks }/>
+      
     </div>
   </header>
 )
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
+  menuLinks: PropTypes.array
 }
 
 Header.defaultProps = {
   siteTitle: ``,
+  menuLinks: []
 }
 
 export default Header

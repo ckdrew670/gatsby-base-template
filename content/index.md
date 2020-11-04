@@ -1,0 +1,4 @@
+---
+path: "/"
+title: "Home"
+---

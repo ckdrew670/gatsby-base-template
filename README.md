@@ -28,7 +28,7 @@ gatsby new {project-name} && cd {project-name} && gatsby develop
 
 ## Plugins
 
-The Gatsby default theme comes with some popular plugins added (see the `gatsby-config.js` file for the full list). You'll need to run `npm install` to install them.
+The Gatsby default theme comes with some useful plugins added (see the `gatsby-config.js` file for the full list). You'll need to run `npm install` to install them.
 
 You can easily add extra plugins from Gatsby's vast library using `npm install {plugin-name}`. Then go and update your `gatsby-config.js` plugins list to include the new plugin:
 
@@ -45,7 +45,7 @@ module.exports = {
 
 ### Source Plugins
 
-Source plugins create nodes which can then be transformed into a usable format by a transformer plugin. For instance, a typical workflow often involves using `gatsby-source-filesystem`, which loads files off of disk (e.g. markdown files) and then specifying a Markdown transformer, eg. `gatsby-transformer-remark` to transform the Markdown into HTML.
+Source plugins get data for you. They create nodes which can then be transformed into a usable format by a transformer plugin. For instance, a typical workflow often involves using `gatsby-source-filesystem`, which loads data/content files from your project (e.g. markdown files) and then specifying a Markdown transformer, eg. `gatsby-transformer-remark` to transform the Markdown into HTML.
 
 #### gatsby-source-filesystem
 
@@ -172,7 +172,7 @@ We've defined the path to the post content files in our source plugin config abo
 
 ```md
 ---
-path: "/posts/hello-world"
+path: "/hello-world"
 date: "2020-11-02"
 title: "A Hello World Post"
 author: "Charlotte"
@@ -185,7 +185,7 @@ Hello there, world! Here's my first blog post!
 
 The block between the `---` is **front matter** data that you can inject into your React components later on. All your important metadata for each post goes here. It's written in `yaml` format.
 
-One important note is that `path` will be used when you dynamically create your pages to specify the URL/path to render the file. In this instance, `http://localhost:8000/posts/hello-world` will be the path to this file.
+One important note is that `path` will be used when you dynamically create your pages to specify the URL/path to render the file. In this instance, `http://localhost:8000/hello-world` will be the path to this file.
 
 ## React Templates
 
@@ -510,7 +510,7 @@ Then replace any anchor tags that point to internal files with the `<Link/>` com
 <Link to="/" state={{ choice: 'pancakes' }}>
 ```
 
-Under the hood this is using React Router and means that your pages won't need to fully refresh every time an internal link is clicked. Hints on how to style these links can be found [here](https://www.gatsbyjs.com/docs/gatsby-link/).
+Under the hood this is using `@reach/router` and means that your pages won't need to fully refresh every time an internal link is clicked. Hints on how to style these links can be found [here](https://www.gatsbyjs.com/docs/gatsby-link/).
 
 Notice that you can add a `state` prop to the Link component and pass state through from the source page to the linked page. To access this in the linked page, use the `location` object to pull in the state as a prop.
 
@@ -557,6 +557,59 @@ module.exports = {
 ```
 
 More on this [in the docs](https://www.gatsbyjs.com/docs/path-prefix/).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Using this Gatsby Base Theme
+
+## Gatsby CLI
+
+Install the Gatsby CLI `npm install -g gatsby-cli`. You'll need Node v10+ (`nvm use v10`). You can set up an `.nvmrc` file in your project to manage your version of Node.
+
+There is a comprehensive cheatsheet for Gatsby CLI commands [here](https://www.gatsbyjs.com/docs/cheat-sheet/) or run `gatsby --help`.
+
+## Quickstart
+
+Create a new project using the Gatsby CLI and this repo as a base:
+
+`gatsby new project-name git@github.com:ckdrew670/gatsby-base-template.git`
+
+Move into your project folder, run `npm install` to download plugins and then run the development server:
+
+```bash
+cd project-name
+npm install
+gatsby develop
+```
+
+Your site is now available to view at `http://localhost:8000`.
+
+## Plugins built in
+## Add a new plugin
+## Config (set up siteMetadata)
+## Navigation
+## Content Creation
+### Create a post
+### Create a content page
+### Add content for home page
+### Add content for archive page
+## Add a component
+## Styling
+
+
+
 
 
 

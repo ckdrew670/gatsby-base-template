@@ -20,3 +20,18 @@ const IndexPage = () => (
 )
 
 export default IndexPage
+
+export const pageQuery = graphql`
+  query Homepage($path: String!) {
+    markdownRemark(frontmatter: { path: { eq: $path } }) {
+      html
+      frontmatter {
+        date(formatString: "MMMM DD, YYYY HH:MM:SS")
+        path
+        title
+        author
+        tags
+      }
+    }
+  }
+`

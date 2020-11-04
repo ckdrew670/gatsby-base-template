@@ -1,0 +1,5 @@
+---
+path: "/archive"
+---
+
+Archive.
