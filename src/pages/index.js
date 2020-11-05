@@ -5,9 +5,6 @@ import SEO from "../components/seo"
 import Hero from "../components/hero"
 import ServicesPanel from "../components/services-panel"
 
-// try and build a homepage like the lunar one already using components with separate content
-// content added to index.md file but could be seeded into components by passing component data objects down through index.md as props
-
 export default function Homepage({
     data // this prop will be injected by the GraphQL query
   }) {

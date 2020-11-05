@@ -51,11 +51,12 @@ Your site is now available to view at `http://localhost:8000`.
 
 This Gatsby base theme includes the following plugins. Run `npm install` to install:
 
-* [gatsby-source-filesystem](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/?=source-file)
-* [gatsby-transformer-remark](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/)
-* [gatsby-plugin-react-helmet](https://www.gatsbyjs.com/plugins/gatsby-plugin-react-helmet/)
-* [gatsby-plugin-catch-links](https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/)
-* [gatsby-plugin-remark-collection](https://www.gatsbyjs.com/plugins/gatsby-plugin-remark-collection/?=gatsby-pluginremark)
+- [gatsby-source-filesystem](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/?=source-file)
+- [gatsby-transformer-remark](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/)
+- [gatsby-plugin-react-helmet](https://www.gatsbyjs.com/plugins/gatsby-plugin-react-helmet/)
+- [gatsby-plugin-catch-links](https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/)
+- [gatsby-plugin-remark-collection](https://www.gatsbyjs.com/plugins/gatsby-plugin-remark-collection/?=gatsby-pluginremark)
+- [gatsby-plugin-sass](https://www.gatsbyjs.com/plugins/gatsby-plugin-sass/?=sas)
 
 ### Add a new plugin
 
@@ -152,7 +153,12 @@ tags: [ "world", "hello" ]
 This will automatically generate a new post with `/your-path` as the url slug. This uses the `Post.js` template found at `src/templates/Post.js`.
 
 ### Add content for the homepage
+
+
 ### Add content for an archive page
-## Add a component
-### Add content for a component
-## Styling
+### Add a new content collection
+## Creating Components
+### Adding content for a new component
+## Querying Data
+## Custom Styling
+## Responsive Images

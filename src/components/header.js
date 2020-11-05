@@ -4,22 +4,9 @@ import React from "react";
 import MainNav from "../components/main-nav";
 
 const Header = ({ siteTitle, menuLinks }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-    }}
-  >
-    <div
-      style={{
-        display: `flex`,
-        justifyContent: `space-between`,
-        alignItems: `center`,
-        margin: `0 2rem`,
-        maxWidth:"100%",
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
+  <header class="site-header">
+    <div class="site-header__content">
+      <h1 class="site-header__title">
         <Link
           to="/"
           style={{
