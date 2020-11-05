@@ -1,6 +1,7 @@
 # Using this Gatsby Base Theme
 
 <!-- TOC -->
+
 - [Gatsby CLI](#gatsby-cli)
 - [Quickstart](#quickstart)
 - [Plugins](#plugins)
@@ -16,6 +17,7 @@
     - [Add content for an archive page](#add-content-for-an-archive-page)
     - [Add a new content collection](#add-a-new-content-collection)
 - [Creating Components](#creating-components)
+    - [Add content for a new component](#adding-content-for-a-new-component)
 - [Creating a new data query](#creating-a-new-data-query)
 - [Custom Styling](#custom-styling)
 
@@ -138,14 +140,16 @@ Create a new markdown file in `/content/posts`. Available variables in the front
 
 ```md
 ---
-path: "/your-post"
+path: "/your-path"
 date: "2020-11-03 08:00:00"
 title: "Hello World"
 author: "Charlotte Drew"
-excerpt: "Lorem ipsum dolor sit amet consectetur adipiscing elit conubia nunc pharetra rhoncus, nibh nascetur placerat porta taciti congue vel leo ridiculus risus varius, convallis commodo dictum lacus pretium etiam eros mollis parturient accumsan."
+excerpt: "Lorem ipsum dolor sit amet consectetur adipiscing elit."
 tags: [ "world", "hello" ]
 ---
 ```
+
+This will automatically generate a new post with `/your-path` as the url slug. This uses the `Post.js` template found at `src/templates/Post.js`.
 
 ### Add content for the homepage
 ### Add content for an archive page
