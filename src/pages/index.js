@@ -14,8 +14,7 @@ export default function Homepage({
     const content = data.markdownRemark; // data.markdownRemark holds your post data
     const hero = content.frontmatter.hero;
     const services = content.frontmatter.services;
-    
-    console.log(content)
+
     return (
       <Layout>
           <SEO title="Home"/>
@@ -40,6 +39,8 @@ export const pageQuery = graphql`
         services {
             title
             subtitle
+            ctaUrl
+            ctaText
         }
       }
     }

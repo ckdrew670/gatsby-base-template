@@ -1,5 +1,5 @@
 ---
-path: "/hello-again-world"
+path: "/blog/hello-again-world"
 date: "2020-11-03"
 title: "Another Hello World Post"
 author: "Charlotte"
