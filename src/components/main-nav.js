@@ -3,7 +3,7 @@ import React from "react"
 
 const MainNav = ({ menuLinks }) => (
     <nav>
-        <ul style={{ display: "flex", flex: 1 }}>
+        <ul style={{ display: "flex", margin: "0" }}>
             { menuLinks.map(link => (
             <li
                 key={ link.name }

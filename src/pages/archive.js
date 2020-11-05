@@ -4,8 +4,6 @@ import { Helmet } from "react-helmet"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-// import '../css/index.css'; // add some style if you want!
-
 export default function Archive({ data }) {
   const { edges: posts } = data.allMarkdownRemark
   return (

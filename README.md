@@ -596,13 +596,91 @@ gatsby develop
 
 Your site is now available to view at `http://localhost:8000`.
 
-## Plugins built in
-## Add a new plugin
-## Config (set up siteMetadata)
+## Plugins
+
+This Gatsby base theme includes the following plugins. Run `npm install` to install:
+
+* [gatsby-source-filesystem](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/?=source-file)
+* [gatsby-transformer-remark](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/)
+* [gatsby-plugin-react-helmet](https://www.gatsbyjs.com/plugins/gatsby-plugin-react-helmet/)
+* [gatsby-plugin-catch-links](https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/)
+* [gatsby-plugin-remark-collection](https://www.gatsbyjs.com/plugins/gatsby-plugin-remark-collection/?=gatsby-pluginremark)
+
+### Add a new plugin
+
+You can easily add extra plugins from Gatsby's vast library using `npm install {plugin-name}`. Then go and update your `gatsby-config.js` plugins list to include the new plugin:
+
+```js
+module.exports = {
+  plugins: [
+    "gatsby-plugin-catch-links",
+    "gatsby-plugin-react-helmet"
+  ]
+}
+```
+
+[Explore the Gatsby Plugin Library here](https://www.gatsbyjs.com/plugins/).
+
+## Site metadata
+
+You can add site metadata in your `gatsby-config.js` file like so:
+
+```js
+  module.exports = {
+    siteMetadata: {
+      title: `Your Blog Title`,
+      description: `Add a description for your site here.`,
+      author: `Your Name`,
+      menuLinks: [
+        {
+            name:'Home',
+            link:'/'
+        },
+        {
+            name:'Posts',
+            link:'/posts'
+        },
+        {
+            name:'About',
+            link:'/about'
+        }
+    ]
+    },
+    plugins: [
+      "gatsby-plugin-catch-links",
+      "gatsby-plugin-react-helmet",
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: `${__dirname}/src/pages`,
+          name: "pages"
+        }
+      }
+    ]
+  }
+```
+
+This is also where the data for your site navigation (main menu) lives. See [Navigation](#navigation) for more details.
+
 ## Navigation
+
+The data for site navigation items in the main header menu are stored in the `gatsby-config.js` file under `menuLinks`. To add a new menu item, simply add the content of the link (eg. "Home") and its filepath (eg. "/") as a new object in the `menuLinks` array:
+
+```js
+{
+    name:'Home',
+    link:'/'
+},
+```
+
 ## Content Creation
-### Create a post
-### Create a content page
+
+The content of the site should be kept separate from the templates. There is a `/content` folder where all content files are stored. Content is added using Markdown.
+
+### Add content for a post
+
+Create a new markdown file in `/content/posts`. Available variables in the frontmatter data include ...
+
 ### Add content for home page
 ### Add content for archive page
 ## Add a component

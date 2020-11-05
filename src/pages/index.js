@@ -1,36 +1,46 @@
 import React from "react"
-import { Link } from "gatsby"
 
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
+import Hero from "../components/hero"
+import ServicesPanel from "../components/services-panel"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-  </Layout>
-)
+// try and build a homepage like the lunar one already using components with separate content
+// content added to index.md file but could be seeded into components by passing component data objects down through index.md as props
 
-export default IndexPage
+export default function Homepage({
+    data // this prop will be injected by the GraphQL query
+  }) {
+    const content = data.markdownRemark; // data.markdownRemark holds your post data
+    const hero = content.frontmatter.hero;
+    const services = content.frontmatter.services;
+    
+    console.log(content)
+    return (
+      <Layout>
+          <SEO title="Home"/>
+          <Hero hero={ hero } />
+          <ServicesPanel services={ services } />
+      </Layout>
+    )
+  }
 
 export const pageQuery = graphql`
   query Homepage($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
       html
       frontmatter {
-        date(formatString: "MMMM DD, YYYY HH:MM:SS")
         path
         title
-        author
-        tags
+        hero {
+            title
+            subtitle
+            backgroundImage
+        }
+        services {
+            title
+            subtitle
+        }
       }
     }
   }

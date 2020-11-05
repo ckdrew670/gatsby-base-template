@@ -7,15 +7,15 @@ const Header = ({ siteTitle, menuLinks }) => (
   <header
     style={{
       background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
     }}
   >
     <div
       style={{
         display: `flex`,
         justifyContent: `space-between`,
-        margin: `0 auto`,
-        maxWidth: 960,
+        alignItems: `center`,
+        margin: `0 2rem`,
+        maxWidth:"100%",
         padding: `1.45rem 1.0875rem`,
       }}
     >
