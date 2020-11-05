@@ -10,7 +10,7 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
-import "./layout.css"
+import "../assets/styles/main.scss"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -35,6 +35,7 @@ const Layout = ({ children }) => {
       <Header siteTitle={ siteData.title } menuLinks={ siteData.menuLinks } />
       
       <main>{ children }</main>
+
         <footer style={{
           marginTop: `2rem`
         }}>

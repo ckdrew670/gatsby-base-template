@@ -9,6 +9,7 @@ This Gatsby base theme includes the following plugins. Run `npm install` to inst
 * [gatsby-plugin-react-helmet](https://www.gatsbyjs.com/plugins/gatsby-plugin-react-helmet/)
 * [gatsby-plugin-catch-links](https://www.gatsbyjs.com/plugins/gatsby-plugin-catch-links/)
 * [gatsby-plugin-remark-collection](https://www.gatsbyjs.com/plugins/gatsby-plugin-remark-collection/?=gatsby-pluginremark)
+* [gatsby-plugin-sass](https://www.gatsbyjs.com/plugins/gatsby-plugin-sass/?=sas)
 
 ## Gatsby CLI
 
@@ -137,6 +138,25 @@ export const pageQuery = graphql`
   }
 `
 
+```
+### gatsby-plugin-sass
+
+Add [Gatsby's Sass plugin](https://www.gatsbyjs.com/plugins/gatsby-plugin-sass/?=sas) to use Sass in your project:
+
+```bash
+npm install node-sass gatsby-plugin-sass
+```
+
+Include the plugin in your `gatsby-config.js` file:
+
+```js
+plugins: [`gatsby-plugin-sass`]
+```
+
+Sass away as normal and import or require the `main.scss` file into your `gatsby-browser.js` file. 
+
+```js
+import "./src/assets/styles/main.scss"
 ```
 
 ## Site metadata

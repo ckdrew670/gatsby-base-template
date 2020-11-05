@@ -21,6 +21,7 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-remark-collection`,
+    `gatsby-plugin-sass`,
     {
         resolve: `gatsby-source-filesystem`,
         options: {
