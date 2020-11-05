@@ -2,10 +2,9 @@
 path: "/blog/hello-again-world"
 date: "2020-11-03"
 title: "Another Hello World Post"
-author: "Charlotte"
-tags:
-    - "fun"
-    - "hello"
+author: "Charlotte Drew"
+excerpt: "Lorem ipsum dolor sit amet consectetur adipiscing elit conubia nunc pharetra rhoncus, nibh nascetur placerat porta taciti congue vel leo ridiculus risus varius, convallis commodo dictum lacus pretium etiam eros mollis parturient accumsan."
+tags: [ "fun", "hello" ]
 ---
 
 Lorem ipsum dolor sit amet consectetur adipiscing elit conubia nunc pharetra rhoncus, nibh nascetur placerat porta taciti congue vel leo ridiculus risus varius, convallis commodo dictum lacus pretium etiam eros mollis parturient accumsan. Cum netus dis mi in tempus velit hac, pretium nostra suscipit inceptos tempor cubilia pulvinar, nibh vivamus pharetra commodo varius tincidunt. Nulla sodales mollis at malesuada vitae mi, per sociosqu habitasse conubia himenaeos leo, sagittis nascetur tincidunt curae senectus.

@@ -3,6 +3,7 @@ path: "/blog/hello-world"
 date: "2020-11-02"
 title: "A Hello World Post"
 author: "Charlotte"
+excerpt: "Lorem ipsum dolor sit amet consectetur adipiscing elit conubia nunc pharetra rhoncus, nibh nascetur placerat porta taciti congue vel leo ridiculus risus varius, convallis commodo dictum lacus pretium etiam eros mollis parturient accumsan."
 tags: [ "fun", "hello" ]
 ---
 

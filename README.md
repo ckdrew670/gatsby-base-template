@@ -10,6 +10,7 @@
     - [Site Metadata](#site-metadata)
 - [Navigation](#navigation)
 - [Content Creation](#content-creation)
+    - [Add Site Metadata](#add-site-metadata)
     - [Add a post](#add-content-for-a-post)
     - [Add content for the homepage](#add-content-for-the-homepage)
     - [Add content for an archive page](#add-content-for-an-archive-page)
@@ -127,11 +128,27 @@ The data for site navigation items in the main header menu are stored in the `ga
 
 The content of the site should be kept separate from the templates. There is a `/content` folder where all content files are stored. Content is added using Markdown.
 
+### Add site metadata
+
+You can add site metadata, including site navigation data in the `gatsby-config.js` file. For more info see [Site Metadata](#site-metadata).
+
 ### Add content for a post
 
-Create a new markdown file in `/content/posts`. Available variables in the frontmatter data include ...
+Create a new markdown file in `/content/posts`. Available variables in the frontmatter data include:
 
-### Add content for home page
-### Add content for archive page
+```md
+---
+path: "/your-post"
+date: "2020-11-03 08:00:00"
+title: "Hello World"
+author: "Charlotte Drew"
+excerpt: "Lorem ipsum dolor sit amet consectetur adipiscing elit conubia nunc pharetra rhoncus, nibh nascetur placerat porta taciti congue vel leo ridiculus risus varius, convallis commodo dictum lacus pretium etiam eros mollis parturient accumsan."
+tags: [ "world", "hello" ]
+---
+```
+
+### Add content for the homepage
+### Add content for an archive page
 ## Add a component
+### Add content for a component
 ## Styling
