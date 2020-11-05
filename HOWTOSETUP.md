@@ -153,11 +153,13 @@ Include the plugin in your `gatsby-config.js` file:
 plugins: [`gatsby-plugin-sass`]
 ```
 
-Sass away as normal and import or require the `main.scss` file into your `gatsby-browser.js` file. 
+Sass away as normal and import or require the `main.scss` file into your `layout.js` file or other.
 
 ```js
-import "./src/assets/styles/main.scss"
+import "../assets/styles/main.scss"
 ```
+
+*NB: the `node-sass` version preferred is **^4.14.1**. You might find some errors thrown if you update to the latest version.*
 
 ## Site metadata
 

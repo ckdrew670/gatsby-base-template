@@ -154,11 +154,16 @@ This will automatically generate a new post with `/your-path` as the url slug. T
 
 ### Add content for the homepage
 
-
 ### Add content for an archive page
 ### Add a new content collection
 ## Creating Components
 ### Adding content for a new component
 ## Querying Data
+
 ## Custom Styling
+
+This base-theme uses Sass for styling. Sass files can be found in `src/assets/styles` and `main.scss` is imported into the `layout.js` file.
+
+*NB: the `node-sass` version is **^4.14.1**. You might find some errors thrown if you update to the latest version.*
+
 ## Responsive Images
