@@ -153,6 +153,9 @@ This will automatically generate a new post with `/your-path` as the url slug. T
 
 ### Add content for the homepage
 ### Add content for an archive page
-## Add a component
-### Add content for a component
-## Styling
+### Add a new content collection
+## Creating Components 
+### Adding content for a new component
+## Querying Data
+## Custom Styling
+## Responsive Images
