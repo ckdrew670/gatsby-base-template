@@ -133,13 +133,13 @@ The content of the site should be kept separate from the templates. There is a `
 
 ### Add site metadata
 
-You can add site metadata, including site navigation data in the `gatsby-config.js` file. For more info see [Site Metadata](#site-metadata).
+You can add site metadata, including site navigation, header and footer data in the `gatsby-config.js` file. For more info see [Site Metadata](#site-metadata).
 
 ### Add content for a post
 
 Create a new markdown file in `/content/posts`. Available variables in the frontmatter data include:
 
-```md
+```yaml
 ---
 path: "/your-path"
 date: "2020-11-03 08:00:00"
@@ -154,8 +154,105 @@ This will automatically generate a new post with `/your-path` as the url slug. T
 
 ### Add content for the homepage
 
+You'll find the markdown file for the homepage at `content/index.md`. The homepage is built from a selection of separate components - eg. hero, services panel - that accept a data object as props. The properties of these data objects, as well as any other content for the page can be defined in the frontmatter of `index.md` as follows:
+
+```yaml
+---
+path: "/"
+title: "Home"
+hero: {
+    backgroundImage: "src/assets/images/lighthouse.jpg",
+    title: "Hero title",
+    subtitle: ""
+}
+services: {
+    title: "Services",
+    subtitle: "Lorem ipsum dolor sit amet consectetur adipiscing.",
+    ctaUrl: "/our-services",
+    ctaText: "View our services"
+}
+---
+```
+
 ### Add content for an archive page
+
+Similarly to the homepage, the `archive.md` page can be found in `content.md`.
+
 ### Add a new content collection
+
+Let's say you want to add a list of testimonials or business services to your site. You can store these in their own folder in `/content` and pull the data into your page or component templates.
+
+Create a directory `/content/services`. This is where each of your markdown files for each service will live. In the repo each service has the following data:
+
+```yaml
+---
+title: "Apps"
+---
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit purus cras natoque, in litora parturient accumsan ad montes ligula mi metus tempus, dis suspendisse hac risus ante posuere convallis lobortis sagittis.
+
+[Read more](/our-work)
+```
+
+Let's say you want to access this data in a homepage component (in the example our `services-panel.js` file). You'll need to use the `useStaticQuery` hook to access the data in a non-page component:
+
+```js
+import { Link, useStaticQuery, graphql } from "gatsby"
+import React from "react";
+
+export default function ServicesPanel({
+    services // this is the block data coming from index.md, passed through index.js as props
+  }) {
+
+    // create a static query to pull data in from your services markdown files ... 
+    const servicesData = useStaticQuery(
+        graphql`
+          query {
+            allMarkdownRemark(filter: {fields: {collection: {eq: "services"}}}) {
+                edges {
+                  node {
+                    id
+                    frontmatter {
+                      title
+                    }
+                    html
+                  }
+                }
+            }
+          }
+        `
+    )
+
+    // these variables come from index.md
+    let { title, subtitle, ctaText, ctaUrl } = services;
+
+    // these come from your static query
+    let data = servicesData.allMarkdownRemark.edges;
+
+    return (
+        <section class="services-panel">
+            <h1>{ title }</h1>
+            { subtitle ? <h2>{ subtitle }</h2> : null }
+            <div class="services-list">
+                { data.map(({ node }) => (
+                    <div key={ node.id} class="service-card">
+                        <h2>{ node.frontmatter.title }</h2>
+                        <div
+                            className="service-card-content"
+                            dangerouslySetInnerHTML={{ __html: node.html }}
+                        />
+                    </div>
+                ))}
+            </div>
+
+            <Link to={ ctaUrl }>{ ctaText }</Link>
+        </section>
+    )
+}
+
+```
+
+Find out how to query data in page components [here](#querying-data)
 ## Creating Components
 ### Adding content for a new component
 ## Querying Data
